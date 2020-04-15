@@ -162,6 +162,6 @@ export const loginAPI: LoginType[] = [
   {
     username: 'emailT2@falso.com',
     password: 'cliente',
-    rol: 'user',
+    rol: 'client',
   },
 ];

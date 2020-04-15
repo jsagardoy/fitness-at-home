@@ -15,10 +15,12 @@ import {
 } from '@material-ui/core';
 
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
 import PhoneIcon from '@material-ui/icons/Phone';
+
 import { useHistory, useParams } from 'react-router-dom';
 import { trainerAPI, clientAPI } from 'api';
-import { getSessionCookie } from 'common/cookies';
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,6 +44,10 @@ export const ClientsListContainerComponent: React.FC<Props> = (props) => {
   const handleGoToDetails = (id: number) => {
     history.push(`/trainer/${trainerId}/client/${id}`);
   };
+  
+  const handleGoToRoutines = (id: number) => {
+    history.push(`/trainer/${trainerId}/client/${id}/generate-rutine`);
+  };
 
   const getTrainer = (id: number): TrainerType =>
     trainerAPI.find((trainer) => trainer.trainer_id === id);
@@ -49,15 +55,15 @@ export const ClientsListContainerComponent: React.FC<Props> = (props) => {
   const getClientsList = (): ClientType[] => {
     // returs the expecifict client list for the logged trainer
     const trainer: TrainerType = getTrainer(+trainerId);
-    const trainerClientsList: number[] = trainer.clientList;
-    const cl: ClientType[] = trainerClientsList.map(t => clientAPI.find((c) => c.client_id === t));
+    const trainerCL: number[] = trainer.clientList;
+    const cl: ClientType[] = trainerCL.map(t => clientAPI.find((c) => c.client_id === t));
     return cl;
   };
 
-  const clientsList = getClientsList();
+  const trainerClientsList = getClientsList();
   return (
     <List className={classes.root}>
-      {clientsList.map((client) => {
+      {trainerClientsList.map((client) => {
         return (
           <div key={client.client_id}>
             <ListItem alignItems='flex-start'>
@@ -76,6 +82,13 @@ export const ClientsListContainerComponent: React.FC<Props> = (props) => {
               />
 
               <ListItemSecondaryAction>
+                <IconButton
+                  edge='end'
+                  aria-label='routines'
+                  onClick={(e) => handleGoToRoutines(client.client_id)}
+                >
+                  <AccessibilityNewIcon />
+                </IconButton>
                 <IconButton
                   edge='end'
                   aria-label='detail'

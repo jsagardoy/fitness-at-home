@@ -11,6 +11,7 @@ import { App } from 'scenes/app';
 import { ClientDetailComponent } from 'pods/clients';
 import { LoginComponent, logoutHandlerComponent } from 'common/login';
 import { getSessionCookie } from 'common/cookies';
+import { ManageRoutinesComponent } from 'pods/rutines';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
@@ -32,14 +33,14 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 const routing = (
   <Router>
     <Switch>
-      <Route exact path='/login' component={LoginComponent} />
       <PrivateRoute exact path='/' component={App} />
+      <Route exact path='/login' component={LoginComponent} />
+      <PrivateRoute exact path='/logout' component={logoutHandlerComponent} />
       <PrivateRoute
         exact
         path='/trainer/:trainerId/clients'
         component={ClientsContainerComponent}
       />
-      <PrivateRoute exact path='/logout' component={logoutHandlerComponent} />
       <PrivateRoute
         exact
         path='/trainer/:trainerId/client/:clientId'
@@ -48,7 +49,7 @@ const routing = (
       <PrivateRoute
         exact
         path='/trainer/:trainerId/client/:clientId/generate-rutine'
-        component={logoutHandlerComponent}
+        component={ManageRoutinesComponent}
       />
     </Switch>
   </Router>

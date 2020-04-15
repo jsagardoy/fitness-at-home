@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const ClientDetailComponent: React.FC<Props> = (props) => {
-  const { clientId } = useParams();
+  const { clientId, trainerId } = useParams();
   const history = useHistory();
   const classes = useStyles();
   const newClientId: number = +clientId;
@@ -45,13 +45,13 @@ export const ClientDetailComponent: React.FC<Props> = (props) => {
 
 
   const handleBackToClientList = () => {
-    history.push(`/clients`);
+    history.push(`/trainer/${getTrainer().trainer_id}/clients`);
   };
 
   const getTrainer = (): TrainerType =>
-    trainerAPI.find((tr) => tr.trainer_id === getClient().trainer_id);
+    trainerAPI.find((tr) => tr.trainer_id === +trainerId);
 
-  const displayClientInfo = (client: ClientType): React.ReactElement => {
+  const displayClientInfoComponent = (client: ClientType): React.ReactElement => {
     return (
       <>
         <Button id='back-arrow' onClick={(e) => handleBackToClientList()}>
@@ -89,5 +89,5 @@ export const ClientDetailComponent: React.FC<Props> = (props) => {
       </>
     );
   };
-  return displayClientInfo(getClient());
+  return displayClientInfoComponent(getClient());
 };
