@@ -37,7 +37,7 @@ export const trainerAPI: TrainerType[] = [
   },
 ];
 
-export const execiseAPI: ExerciseType[] = [
+export const exerciseAPI: ExerciseType[] = [
   {
     exercise_id: 1,
     trainer_id: [1, 2, 3],

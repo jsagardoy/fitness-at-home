@@ -80,7 +80,7 @@ export const ClientDetailComponent: React.FC<Props> = (props) => {
               <ListItem alignItems='flex-start'>
                 <ClientExerciseComponent
                   trainer={getTrainer()}
-                  exerciseElem={exer}
+                  clientExercise={exer}
                 />
               </ListItem>
             </div>
