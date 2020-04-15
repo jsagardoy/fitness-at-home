@@ -36,13 +36,19 @@ const routing = (
       <PrivateRoute exact path='/' component={App} />
       <PrivateRoute
         exact
-        path='/clients'
+        path='/trainer/:trainerId/clients'
         component={ClientsContainerComponent}
       />
       <PrivateRoute exact path='/logout' component={logoutHandlerComponent} />
       <PrivateRoute
-        path='/client/:clientId'
+        exact
+        path='/trainer/:trainerId/client/:clientId'
         component={ClientDetailComponent}
+      />
+      <PrivateRoute
+        exact
+        path='/trainer/:trainerId/client/:clientId/generate-rutine'
+        component={logoutHandlerComponent}
       />
     </Switch>
   </Router>

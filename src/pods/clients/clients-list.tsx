@@ -16,7 +16,7 @@ import {
 
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import PhoneIcon from '@material-ui/icons/Phone';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { trainerAPI, clientAPI } from 'api';
 import { getSessionCookie } from 'common/cookies';
 
@@ -37,18 +37,18 @@ export interface Props {}
 export const ClientsListContainerComponent: React.FC<Props> = (props) => {
   const classes = useStyles();
   const history = useHistory();
+  const { trainerId } = useParams();
 
   const handleGoToDetails = (id: number) => {
-    history.push(`/client/${id}`);
+    history.push(`/trainer/${trainerId}/client/${id}`);
   };
 
-  const getTrainer = (username: string): TrainerType =>
-    trainerAPI.find((trainer) => trainer.trainer_info.email === username);
+  const getTrainer = (id: number): TrainerType =>
+    trainerAPI.find((trainer) => trainer.trainer_id === id);
 
   const getClientsList = (): ClientType[] => {
     // returs the expecifict client list for the logged trainer
-    const user = getSessionCookie();
-    const trainer: TrainerType = getTrainer(user.loginInfo.username);
+    const trainer: TrainerType = getTrainer(+trainerId);
     const trainerClientsList: number[] = trainer.clientList;
     const cl: ClientType[] = trainerClientsList.map(t => clientAPI.find((c) => c.client_id === t));
     return cl;
