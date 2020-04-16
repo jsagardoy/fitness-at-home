@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ClientType, TrainerType } from 'commonApp/interfaces';
+import { ClientType, TrainerType, LoginType } from 'commonApp/interfaces';
 import { clientAPI, trainerAPI } from 'api';
 import {
   Card,
@@ -13,10 +13,12 @@ import {
   makeStyles,
   Theme,
   Button,
+  Hidden,
 } from '@material-ui/core';
 import { ClientExerciseComponent } from './client-exercise-detail';
 import { useParams, useHistory } from 'react-router-dom';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import { getSessionCookie } from 'common/cookies';
 
 interface Props {}
 
@@ -43,7 +45,6 @@ export const ClientDetailComponent: React.FC<Props> = (props) => {
     return client;
   };
 
-
   const handleBackToClientList = () => {
     history.push(`/trainer/${getTrainer().trainer_id}/clients`);
   };
@@ -51,13 +52,19 @@ export const ClientDetailComponent: React.FC<Props> = (props) => {
   const getTrainer = (): TrainerType =>
     trainerAPI.find((tr) => tr.trainer_id === +trainerId);
 
-  const displayClientInfoComponent = (client: ClientType): React.ReactElement => {
+  const user = getSessionCookie();
+
+  const displayClientInfoComponent = (
+    client: ClientType
+  ): React.ReactElement => {
     return (
       <>
-        <Button id='back-arrow' onClick={(e) => handleBackToClientList()}>
-          <ArrowBackIosIcon />
-          Lista de Clientes
-        </Button>
+        {user.loginInfo.rol === 'trainer' ? (
+          <Button id='back-arrow' onClick={(e) => handleBackToClientList()}>
+            <ArrowBackIosIcon />
+            Lista de Clientes
+          </Button>
+        ) : null}
         <Card className={classes.root}>
           <CardHeader
             title={`${client.person_info.name} ${client.person_info.lastName}`}
