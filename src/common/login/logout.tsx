@@ -9,6 +9,7 @@ export const logoutHandlerComponent: React.FC<Props> = (props) => {
   React.useEffect(() => {
     Cookies.remove('session');
     history.push('/login');
+    window.location.reload();
   }, [history]);
   return <div>Logging out!</div>;
 };

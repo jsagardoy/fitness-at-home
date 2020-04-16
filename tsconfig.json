@@ -13,7 +13,7 @@
     "baseUrl": "src",
     "paths": {
       "api": ["api"],
-      "common-app": ["common-app"],
+      "commonApp": ["commonApp"],
       "common": ["common"],
       "core": ["core"],
       "layout": ["layout"],

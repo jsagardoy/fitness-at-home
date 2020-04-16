@@ -6,12 +6,13 @@ import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import { ClientType, TrainerType } from 'common-app/interfaces';
+import { ClientType, TrainerType } from 'commonApp/interfaces';
 
 import {
   ListItemSecondaryAction,
   IconButton,
   ListItemIcon,
+  Typography,
 } from '@material-ui/core';
 
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -20,7 +21,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 
 import { useHistory, useParams } from 'react-router-dom';
 import { trainerAPI, clientAPI } from 'api';
-
+import { hasPermision, AccessDeniedComponent } from 'commonApp/components';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,7 +45,7 @@ export const ClientsListContainerComponent: React.FC<Props> = (props) => {
   const handleGoToDetails = (id: number) => {
     history.push(`/trainer/${trainerId}/client/${id}`);
   };
-  
+
   const handleGoToRoutines = (id: number) => {
     history.push(`/trainer/${trainerId}/client/${id}/generate-rutine`);
   };
@@ -56,12 +57,15 @@ export const ClientsListContainerComponent: React.FC<Props> = (props) => {
     // returs the expecifict client list for the logged trainer
     const trainer: TrainerType = getTrainer(+trainerId);
     const trainerCL: number[] = trainer.clientList;
-    const cl: ClientType[] = trainerCL.map(t => clientAPI.find((c) => c.client_id === t));
+    const cl: ClientType[] = trainerCL.map((t) =>
+      clientAPI.find((c) => c.client_id === t)
+    );
     return cl;
   };
 
   const trainerClientsList = getClientsList();
-  return (
+
+  return hasPermision('ClientsListContainerComponent') ? (
     <List className={classes.root}>
       {trainerClientsList.map((client) => {
         return (
@@ -103,5 +107,7 @@ export const ClientsListContainerComponent: React.FC<Props> = (props) => {
         );
       })}
     </List>
+  ) : (
+    <AccessDeniedComponent />
   );
 };

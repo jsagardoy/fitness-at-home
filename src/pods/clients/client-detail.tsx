@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ClientType, TrainerType } from 'common-app/interfaces';
+import { ClientType, TrainerType } from 'commonApp/interfaces';
 import { clientAPI, trainerAPI } from 'api';
 import {
   Card,

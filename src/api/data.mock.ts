@@ -3,7 +3,7 @@ import {
   ExerciseType,
   ClientType,
   LoginType,
-} from 'common-app/interfaces';
+} from 'commonApp/interfaces';
 
 export const trainerAPI: TrainerType[] = [
   {

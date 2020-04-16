@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Form, Field } from 'react-final-form';
 import { TextField, Button } from '@material-ui/core';
 import { loginAPI } from 'api';
-import { LoginType } from 'common-app/interfaces';
+import { LoginType } from 'commonApp/interfaces';
 import { useHistory } from 'react-router-dom';
 import { FORM_ERROR } from 'final-form';
 import { setSessionCookie } from 'common/cookies';
@@ -18,6 +18,7 @@ export const LoginComponent: React.FC<Props> = (props) => {
     setSessionCookie({ loginInfo });
     history.push('/');
     setLoading(false);
+    window.location.reload();
   };
   if (loading) {
     return <h4>Logging in...</h4>;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ExerciseType } from 'common-app/interfaces';
+import { ExerciseType } from 'commonApp/interfaces';
 import { List, ListItem, Card, CardHeader } from '@material-ui/core';
 
 export interface Props {

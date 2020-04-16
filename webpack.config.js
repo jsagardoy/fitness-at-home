@@ -11,7 +11,7 @@ module.exports = {
   resolve: {
     alias: {
       api: path.resolve(__dirname, './src/api/'),
-      commonApp: path.resolve(__dirname, './src/common-app/'),
+      commonApp: path.resolve(__dirname, './src/commonApp/'),
       common: path.resolve(__dirname, './src/common/'),
       core: path.resolve(__dirname, './src/core/'),
       layout: path.resolve(__dirname, './src/layout/'),

@@ -3,7 +3,7 @@ import {
   ExerciseType,
   ExerciseSettings,
   TrainerType,
-} from 'common-app/interfaces';
+} from 'commonApp/interfaces';
 import { exerciseAPI, trainerAPI, clientAPI } from 'api';
 import {
   Card,
