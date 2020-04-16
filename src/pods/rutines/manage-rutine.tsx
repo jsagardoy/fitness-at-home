@@ -4,6 +4,8 @@ import Button from '@material-ui/core/Button';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { TrainerType, ClientType } from 'commonApp/interfaces';
 import { trainerAPI, clientAPI } from 'api';
+import { AccessDeniedComponent, hasPermision } from 'commonApp/components';
+import { ExerciseListsComponent } from './exerciseList';
 interface Props {}
 
 export const ManageRoutinesComponent: React.FC<Props> = (props) => {
@@ -27,11 +29,14 @@ export const ManageRoutinesComponent: React.FC<Props> = (props) => {
   const isValidExercise = (idExercise: number): boolean =>
     getTrainer().exerciseList.includes(idExercise);
 
-  return (
+  return hasPermision('ManageRoutinesComponent') ? (
     <>
       <Button id='backButton' onClick={(e) => handleBackToClientList()}>
         <ArrowBackIosIcon /> Lista de Clientes
       </Button>
+      <ExerciseListsComponent client={getClient()} trainer={getTrainer()}/>
     </>
+  ) : (
+    <AccessDeniedComponent />
   );
 };
