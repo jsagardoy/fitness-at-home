@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { exerciseAPI } from 'api';
+import { TrainerExerciseListComponent } from './trainerExerciseList';
 
 interface Props {
   client: ClientType;
@@ -45,28 +46,9 @@ export const ExerciseListsComponent: React.FC<Props> = (props) => {
   };
 
   return (
-    <div id='trainer list'>
-      <TextField
-        placeholder='Entrenamiento'
-        onChange={(e) => handleSearchFilter(e.target.value, 'trainer')}
-      />
-      <List className='trainer-list' component='div'>
-        {trainerExercisesList.map((t) => (
-          <ListItem key={t.exercise_id}>
-            <ListItemAvatar>
-              <Avatar variant='square' src={t.images} />
-            </ListItemAvatar>
-            <Typography paragraph gutterBottom>
-              {t.name}
-            </Typography>
-            <ListItemSecondaryAction>
-              <IconButton edge='end' aria-label='delete'>
-                <ArrowForwardIosIcon />
-              </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
-        ))}
-      </List>
-    </div>
+    <TrainerExerciseListComponent
+      handleSearchFilter={handleSearchFilter}
+      trainerExercisesList={trainerExercisesList}
+    />
   );
 };
