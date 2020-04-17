@@ -26,7 +26,7 @@ export const LoginComponent: React.FC<Props> = (props) => {
 
   const onSubmit = (loginInfo: LoginType) => {
     const logged = loginAPI.find(
-      (user: LoginType) =>
+      (user) =>
         user.username === loginInfo.username &&
         user.password === loginInfo.password
     );
