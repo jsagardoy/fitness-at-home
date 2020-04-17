@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { ClientType, TrainerType, ExerciseType } from 'commonApp/interfaces';
+import {
+  ClientType,
+  TrainerType,
+  ExerciseType,
+  ExerciseSettings,
+} from 'commonApp/interfaces';
 import { exerciseAPI } from 'api';
 import { TrainerExerciseListComponent } from './trainer-exercise-list';
 import { ClientExerciseListComponent } from './client-exercise-list';
@@ -25,8 +30,11 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
     ExerciseType[]
   >(composeTrainerExerciseList());
   const [clientExerciseList, setClientExerciseList] = React.useState<
-    ExerciseType[]
+    ExerciseSettings[]
   >([]);
+
+  const getExercise = (exerciseId: number): ExerciseType =>
+    trainerExercisesList.find((e) => e.exercise_id === exerciseId);
 
   const handleSearchFilter = (value: string, field: string) => {
     switch (field) {
@@ -37,12 +45,13 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
         break;
       case 'client':
         setClientExerciseList(
-          clientExerciseList.filter((e) => e.name.includes(value))
+          clientExerciseList.filter((e) => getExercise(e.exercise_id).name.includes(value))
         );
         break;
     }
   };
 
+  const handleRemoveExercise = () => {};
   return (
     <>
       <TrainerExerciseListComponent
@@ -52,6 +61,8 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
       <ClientExerciseListComponent
         handleSearchFilter={handleSearchFilter}
         clientExercisesList={clientExerciseList}
+        trainerExerciseList={trainerExercisesList}
+        handleRemoveExercise={handleRemoveExercise}
       />
     </>
   );

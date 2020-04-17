@@ -9,16 +9,30 @@ import {
   ListItemSecondaryAction,
   IconButton,
 } from '@material-ui/core';
-import { ExerciseType } from 'commonApp/interfaces';
+import {
+  ExerciseType,
+  ExerciseSettings,
+  TrainerType,
+} from 'commonApp/interfaces';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 interface Props {
-    clientExercisesList: ExerciseType[];
+  clientExercisesList: ExerciseSettings[];
+  trainerExerciseList: ExerciseType[];
   handleSearchFilter: (value: string, field: string) => void;
+  handleRemoveExercise: (exerciseId: number) => void;
 }
 
 export const ClientExerciseListComponent: React.FC<Props> = (props) => {
-  const { handleSearchFilter, clientExercisesList } = props;
+  const {
+    handleSearchFilter,
+    clientExercisesList,
+    trainerExerciseList,
+    handleRemoveExercise,
+  } = props;
+
+  const getExerciseInfo = (id: number): ExerciseType =>
+    trainerExerciseList.find((e) => e.exercise_id === id);
 
   return (
     <div id='client-list'>
@@ -27,21 +41,26 @@ export const ClientExerciseListComponent: React.FC<Props> = (props) => {
         onChange={(e) => handleSearchFilter(e.target.value, 'client')}
       />
       <List className='trainer-list' component='div'>
-        {clientExercisesList.map((t) => (
-          <ListItem key={t.exercise_id}>
+        {clientExercisesList.map((t) => {
+          const exInfo = getExerciseInfo(t.exercise_id);
+          return(<ListItem key={t.exercise_id}>
             <ListItemAvatar>
-              <Avatar variant='square' src={t.images} />
+              <Avatar variant='square' src={exInfo.images} />
             </ListItemAvatar>
             <Typography paragraph gutterBottom>
-              {t.name}
+              {exInfo.name}
             </Typography>
             <ListItemSecondaryAction>
-              <IconButton edge='end' aria-label='remove'>
+              <IconButton
+                edge='end'
+                aria-label='remove'
+                onClick={(e) => handleRemoveExercise(t.exercise_id)}
+              >
                 <ArrowBackIosIcon />
               </IconButton>
             </ListItemSecondaryAction>
-          </ListItem>
-        ))}
+          </ListItem>);
+        })}
       </List>
     </div>
   );
