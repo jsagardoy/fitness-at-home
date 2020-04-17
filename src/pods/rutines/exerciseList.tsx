@@ -8,6 +8,7 @@ import {
 import { exerciseAPI } from 'api';
 import { TrainerExerciseListComponent } from './trainer-exercise-list';
 import { ClientExerciseListComponent } from './client-exercise-list';
+import { ExerciseModalComponent } from './exercise-modal';
 
 interface Props {
   client: ClientType;
@@ -26,6 +27,7 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
     trainer.clientList.includes(client.client_id) &&
     client.trainer_id === trainer.trainer_id;
 
+  const [openModal, setOpenModal] = React.useState(false);
   const [trainerExercisesList, setTrainerExercisesList] = React.useState<
     ExerciseType[]
   >(composeTrainerExerciseList());
@@ -45,24 +47,39 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
         break;
       case 'client':
         setClientExerciseList(
-          clientExerciseList.filter((e) => getExercise(e.exercise_id).name.includes(value))
+          clientExerciseList.filter((e) =>
+            getExercise(e.exercise_id).name.includes(value)
+          )
         );
         break;
     }
   };
 
-  const handleRemoveExercise = () => {};
+  const setExerciseSettings = (reps: number, sets: number) => {
+    setOpenModal(false);
+    alert(`repeticiones ${reps} series ${sets}`);
+  };
+  const handleRemoveExercise = (exerciseId: number) => {};
+  const handleAddExerciseSettings = (exerciseId: number) => {
+    setOpenModal(true);
+  };
+
   return (
     <>
       <TrainerExerciseListComponent
         handleSearchFilter={handleSearchFilter}
         trainerExercisesList={trainerExercisesList}
+        handleAddExerciseSettings={handleAddExerciseSettings}
       />
       <ClientExerciseListComponent
         handleSearchFilter={handleSearchFilter}
         clientExercisesList={clientExerciseList}
         trainerExerciseList={trainerExercisesList}
         handleRemoveExercise={handleRemoveExercise}
+      />
+      <ExerciseModalComponent
+        openModalState={openModal}
+        setExerciseSettings={setExerciseSettings}
       />
     </>
   );

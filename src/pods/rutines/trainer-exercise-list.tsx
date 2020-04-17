@@ -13,12 +13,17 @@ import { ExerciseType } from 'commonApp/interfaces';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 interface Props {
-    trainerExercisesList: ExerciseType[];
+  trainerExercisesList: ExerciseType[];
   handleSearchFilter: (value: string, field: string) => void;
+  handleAddExerciseSettings: (exerciseId: number) => void;
 }
 
 export const TrainerExerciseListComponent: React.FC<Props> = (props) => {
-  const { handleSearchFilter, trainerExercisesList } = props;
+  const {
+    handleSearchFilter,
+    trainerExercisesList,
+    handleAddExerciseSettings,
+  } = props;
 
   return (
     <div id='trainer list'>
@@ -36,7 +41,11 @@ export const TrainerExerciseListComponent: React.FC<Props> = (props) => {
               {t.name}
             </Typography>
             <ListItemSecondaryAction>
-              <IconButton edge='end' aria-label='add'>
+              <IconButton
+                edge='end'
+                aria-label='add'
+                onClick={(e) => handleAddExerciseSettings(t.exercise_id)}
+              >
                 <ArrowForwardIosIcon />
               </IconButton>
             </ListItemSecondaryAction>
