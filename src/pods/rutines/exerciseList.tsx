@@ -28,6 +28,9 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
     client.trainer_id === trainer.trainer_id;
 
   const [openModal, setOpenModal] = React.useState(false);
+  const [selectedTrainerExercise, setSelectedTrainerExercise] = React.useState<
+    number
+  >(null);
   const [trainerExercisesList, setTrainerExercisesList] = React.useState<
     ExerciseType[]
   >(composeTrainerExerciseList());
@@ -57,11 +60,20 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
 
   const setExerciseSettings = (reps: number, sets: number) => {
     setOpenModal(false);
-    alert(`repeticiones ${reps} series ${sets}`);
+    const newExercise: ExerciseSettings = {
+      exercise_id: selectedTrainerExercise,
+      reps,
+      sets,
+      done: false,
+    };
+    const newArray: ExerciseSettings[] = [...clientExerciseList];
+    newArray.push(newExercise);
+    setClientExerciseList(newArray);
   };
   const handleRemoveExercise = (exerciseId: number) => {};
   const handleAddExerciseSettings = (exerciseId: number) => {
     setOpenModal(true);
+    setSelectedTrainerExercise(exerciseId);
   };
 
   return (
