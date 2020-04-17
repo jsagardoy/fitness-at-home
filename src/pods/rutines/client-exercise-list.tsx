@@ -10,24 +10,24 @@ import {
   IconButton,
 } from '@material-ui/core';
 import { ExerciseType } from 'commonApp/interfaces';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 interface Props {
-    trainerExercisesList: ExerciseType[];
+    clientExercisesList: ExerciseType[];
   handleSearchFilter: (value: string, field: string) => void;
 }
 
-export const TrainerExerciseListComponent: React.FC<Props> = (props) => {
-  const { handleSearchFilter, trainerExercisesList } = props;
+export const ClientExerciseListComponent: React.FC<Props> = (props) => {
+  const { handleSearchFilter, clientExercisesList } = props;
 
   return (
-    <div id='trainer list'>
+    <div id='client-list'>
       <TextField
         placeholder='Entrenamiento'
-        onChange={(e) => handleSearchFilter(e.target.value, 'trainer')}
+        onChange={(e) => handleSearchFilter(e.target.value, 'client')}
       />
       <List className='trainer-list' component='div'>
-        {trainerExercisesList.map((t) => (
+        {clientExercisesList.map((t) => (
           <ListItem key={t.exercise_id}>
             <ListItemAvatar>
               <Avatar variant='square' src={t.images} />
@@ -36,8 +36,8 @@ export const TrainerExerciseListComponent: React.FC<Props> = (props) => {
               {t.name}
             </Typography>
             <ListItemSecondaryAction>
-              <IconButton edge='end' aria-label='delete'>
-                <ArrowForwardIosIcon />
+              <IconButton edge='end' aria-label='remove'>
+                <ArrowBackIosIcon />
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>

@@ -5,8 +5,9 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { TrainerType, ClientType } from 'commonApp/interfaces';
 import { trainerAPI, clientAPI } from 'api';
 import { AccessDeniedComponent, hasPermision } from 'commonApp/components';
-import { ExerciseListsComponent } from './exerciseList';
-interface Props {}
+import { RoutineComposerComponent } from './exerciseList';
+
+interface Props { }
 
 export const ManageRoutinesComponent: React.FC<Props> = (props) => {
   const history = useHistory();
@@ -22,19 +23,12 @@ export const ManageRoutinesComponent: React.FC<Props> = (props) => {
   const getClient = (): ClientType =>
     clientAPI.find((c) => c.client_id === +clientId);
 
-  const isValidClient = (): boolean =>
-    getTrainer().clientList.includes(+clientId) &&
-    getClient().trainer_id === getTrainer().trainer_id;
-
-  const isValidExercise = (idExercise: number): boolean =>
-    getTrainer().exerciseList.includes(idExercise);
-
   return hasPermision('ManageRoutinesComponent') ? (
     <>
       <Button id='backButton' onClick={(e) => handleBackToClientList()}>
         <ArrowBackIosIcon /> Lista de Clientes
       </Button>
-      <ExerciseListsComponent client={getClient()} trainer={getTrainer()}/>
+      <RoutineComposerComponent client={getClient()} trainer={getTrainer()} />
     </>
   ) : (
     <AccessDeniedComponent />
