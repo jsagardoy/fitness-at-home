@@ -82,7 +82,7 @@ export const ExerciseModalComponent: React.FC<Props> = (props) => {
 
   return (
     <>
-    <Modal open={openModalState} >
+      <Modal open={openModalState} disableAutoFocus={false}>
       {body}
       </Modal>
     </>

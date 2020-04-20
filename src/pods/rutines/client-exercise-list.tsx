@@ -12,7 +12,6 @@ import {
 import {
   ExerciseType,
   ExerciseSettings,
-  TrainerType,
 } from 'commonApp/interfaces';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
@@ -34,6 +33,7 @@ export const ClientExerciseListComponent: React.FC<Props> = (props) => {
   const getExerciseInfo = (id: number): ExerciseType =>
     trainerExerciseList.find((e) => e.exercise_id === id);
 
+
   return (
     <div id='client-list'>
       <TextField
@@ -41,20 +41,21 @@ export const ClientExerciseListComponent: React.FC<Props> = (props) => {
         onChange={(e) => handleSearchFilter(e.target.value, 'client')}
       />
       <List className='trainer-list' component='div'>
-        {clientExercisesList.map((t) => {
-          const exInfo = getExerciseInfo(t.exercise_id);
-          return(<ListItem key={t.exercise_id}>
+        {clientExercisesList.map((ex) => {
+          const exInfo: ExerciseType = getExerciseInfo(ex.exercise_id);
+          return (
+            <ListItem key={ex.exercise_id}>
             <ListItemAvatar>
               <Avatar variant='square' src={exInfo.images} />
-            </ListItemAvatar>
-            <Typography paragraph gutterBottom>
+              </ListItemAvatar>
+              <Typography paragraph gutterBottom>
               {exInfo.name}
             </Typography>
             <ListItemSecondaryAction>
               <IconButton
                 edge='end'
                 aria-label='remove'
-                onClick={(e) => handleRemoveExercise(t.exercise_id)}
+                onClick={(e) => handleRemoveExercise(ex.exercise_id)}
               >
                 <ArrowBackIosIcon />
               </IconButton>

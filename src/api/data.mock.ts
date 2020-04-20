@@ -18,7 +18,7 @@ export const trainerAPI: TrainerType[] = [
       bio: 'Les hace correr mucho',
     },
     clientList: [1, 2],
-    exerciseList: [1, 2, 3,4],
+    exerciseList: [1, 2, 3, 4],
   },
   {
     trainer_id: 2,
@@ -104,7 +104,7 @@ export const clientAPI: ClientType[] = [
         sets: 5,
       },
       {
-        exercise_id: 5,
+        exercise_id: 3,
         done: false,
         reps: 12,
         sets: 2,

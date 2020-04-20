@@ -17,6 +17,13 @@ interface Props {
 export const RoutineComposerComponent: React.FC<Props> = (props) => {
   const { client, trainer } = props;
 
+  // use for canceling routing purpose
+  const clientExerciseListSaved = client.exercisesList;
+  React.useEffect(() => {
+    // to create a new routine to the client the array needs to be empty
+    client.exercisesList = [];
+  }, []);
+
   const getExerciseList = (id: number): ExerciseType =>
     exerciseAPI.find((e) => e.exercise_id === id && isValidClient());
 
@@ -38,8 +45,8 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
     ExerciseSettings[]
   >([]);
 
-  const getExercise = (exerciseId: number): ExerciseType =>
-    trainerExercisesList.find((e) => e.exercise_id === exerciseId);
+  const getClientExerciseInfo = (id: number): ExerciseType =>
+    exerciseAPI.find((ex) => ex.exercise_id === id);
 
   const handleSearchFilter = (value: string, field: string) => {
     switch (field) {
@@ -50,8 +57,8 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
         break;
       case 'client':
         setClientExerciseList(
-          clientExerciseList.filter((e) =>
-            getExercise(e.exercise_id).name.includes(value)
+          client.exercisesList.filter((ex) =>
+            getClientExerciseInfo(ex.exercise_id).name.includes(value)
           )
         );
         break;
@@ -68,6 +75,7 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
     };
     const newArray: ExerciseSettings[] = [...clientExerciseList];
     newArray.push(newExercise);
+    client.exercisesList.push(newExercise);
     setClientExerciseList(newArray);
   };
   const handleRemoveExercise = (exerciseId: number) => {};
