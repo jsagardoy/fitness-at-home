@@ -93,6 +93,7 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
     <>
       <TrainerExerciseListComponent
         handleSearchFilter={handleSearchFilter}
+        clientExercisesList={clientExerciseList}
         trainerExercisesList={trainerExercisesList}
         handleAddExerciseSettings={handleAddExerciseSettings}
       />

@@ -9,11 +9,12 @@ import {
   ListItemSecondaryAction,
   IconButton,
 } from '@material-ui/core';
-import { ExerciseType } from 'commonApp/interfaces';
+import { ExerciseType, ExerciseSettings } from 'commonApp/interfaces';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 interface Props {
   trainerExercisesList: ExerciseType[];
+  clientExercisesList: ExerciseSettings[];
   handleSearchFilter: (value: string, field: string) => void;
   handleAddExerciseSettings: (exerciseId: number) => void;
 }
@@ -23,7 +24,11 @@ export const TrainerExerciseListComponent: React.FC<Props> = (props) => {
     handleSearchFilter,
     trainerExercisesList,
     handleAddExerciseSettings,
+    clientExercisesList,
   } = props;
+
+  const needsToShow = (id: number): boolean =>
+    clientExercisesList.find((elem) => elem.exercise_id === id)?false:true;
 
   return (
     <div id='trainer list'>
@@ -33,6 +38,7 @@ export const TrainerExerciseListComponent: React.FC<Props> = (props) => {
       />
       <List className='trainer-list' component='div'>
         {trainerExercisesList.map((t) => (
+          needsToShow(t.exercise_id)?
           <ListItem key={t.exercise_id}>
             <ListItemAvatar>
               <Avatar variant='square' src={t.images} />
@@ -49,7 +55,9 @@ export const TrainerExerciseListComponent: React.FC<Props> = (props) => {
                 <ArrowForwardIosIcon />
               </IconButton>
             </ListItemSecondaryAction>
-          </ListItem>
+            </ListItem>
+            :
+            null
         ))}
       </List>
     </div>
