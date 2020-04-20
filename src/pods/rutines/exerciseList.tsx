@@ -78,7 +78,12 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
     client.exercisesList.push(newExercise);
     setClientExerciseList(newArray);
   };
-  const handleRemoveExercise = (exerciseId: number) => {};
+  const handleRemoveExercise = (exerciseId: number) => {
+    const newArray = clientExerciseList.filter((ex) => ex.exercise_id!==exerciseId)
+    setClientExerciseList(
+      newArray
+    );
+  };
   const handleAddExerciseSettings = (exerciseId: number) => {
     setOpenModal(true);
     setSelectedTrainerExercise(exerciseId);
