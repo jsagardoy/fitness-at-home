@@ -20,6 +20,9 @@ export const App: React.FC<{}> = () => {
               <Link to={`/trainer/${trainerId}/client/${clientId}`}>Agente Wigum</Link>
             </li>
             <li>
+              <Link to={`/trainer/${trainerId}/exercise-list`}>Lista de ejercicios de entrenador</Link>
+            </li>
+            <li>
               <Link to={`/login`}>Login</Link>
             </li>
             <li>
