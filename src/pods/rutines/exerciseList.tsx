@@ -5,10 +5,12 @@ import {
   ExerciseType,
   ExerciseSettings,
 } from 'commonApp/interfaces';
-import { exerciseAPI } from 'api';
+import { exerciseAPI, clientAPI } from 'api';
 import { TrainerExerciseListComponent } from './trainer-exercise-list';
 import { ClientExerciseListComponent } from './client-exercise-list';
 import { ExerciseModalComponent } from './exercise-modal';
+import Divider from '@material-ui/core/Divider';
+import { Button } from '@material-ui/core';
 
 interface Props {
   client: ClientType;
@@ -19,6 +21,7 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
 
   // use for canceling routing purpose
   const clientExerciseListSaved = client.exercisesList;
+
   React.useEffect(() => {
     // to create a new routine to the client the array needs to be empty
     client.exercisesList = [];
@@ -45,21 +48,11 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
     ExerciseSettings[]
   >([]);
 
-  const getClientExerciseInfo = (id: number): ExerciseType =>
-    exerciseAPI.find((ex) => ex.exercise_id === id);
-
   const handleSearchFilter = (value: string, field: string) => {
     switch (field) {
       case 'trainer':
         setTrainerExercisesList(
           composeTrainerExerciseList().filter((t) => t.name.includes(value))
-        );
-        break;
-      case 'client':
-        setClientExerciseList(
-          client.exercisesList.filter((ex) =>
-            getClientExerciseInfo(ex.exercise_id).name.includes(value)
-          )
         );
         break;
     }
@@ -79,16 +72,27 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
     setClientExerciseList(newArray);
   };
   const handleRemoveExercise = (exerciseId: number) => {
-    const newArray = clientExerciseList.filter((ex) => ex.exercise_id!==exerciseId)
-    setClientExerciseList(
-      newArray
+    const newArray = clientExerciseList.filter(
+      (ex) => ex.exercise_id !== exerciseId
     );
+    setClientExerciseList(newArray);
   };
+
   const handleAddExerciseSettings = (exerciseId: number) => {
     setOpenModal(true);
     setSelectedTrainerExercise(exerciseId);
   };
 
+  const saveRoutine = () => {
+    client.exercisesList = clientExerciseList;
+    // TBD changed witih the DB changing
+    const newClient = clientAPI.find((c) => c.client_id === client.client_id);
+    clientAPI.splice(
+      clientAPI.findIndex((c) => c.client_id === client.client_id),
+      1,
+      newClient
+    );
+  };
   return (
     <>
       <TrainerExerciseListComponent
@@ -97,8 +101,8 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
         trainerExercisesList={trainerExercisesList}
         handleAddExerciseSettings={handleAddExerciseSettings}
       />
+      <Divider />
       <ClientExerciseListComponent
-        handleSearchFilter={handleSearchFilter}
         clientExercisesList={clientExerciseList}
         trainerExerciseList={trainerExercisesList}
         handleRemoveExercise={handleRemoveExercise}
@@ -107,6 +111,12 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
         openModalState={openModal}
         setExerciseSettings={setExerciseSettings}
       />
+      <Button
+        disabled={clientExerciseList.length === 0}
+        onClick={(e) => saveRoutine()}
+      >
+        Generar rutina
+      </Button>
     </>
   );
 };

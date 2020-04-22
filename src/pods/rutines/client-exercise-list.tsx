@@ -18,13 +18,11 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 interface Props {
   clientExercisesList: ExerciseSettings[];
   trainerExerciseList: ExerciseType[];
-  handleSearchFilter: (value: string, field: string) => void;
   handleRemoveExercise: (exerciseId: number) => void;
 }
 
 export const ClientExerciseListComponent: React.FC<Props> = (props) => {
   const {
-    handleSearchFilter,
     clientExercisesList,
     trainerExerciseList,
     handleRemoveExercise,
@@ -36,10 +34,6 @@ export const ClientExerciseListComponent: React.FC<Props> = (props) => {
 
   return (
     <div id='client-list'>
-      <TextField
-        placeholder='Entrenamiento'
-        onChange={(e) => handleSearchFilter(e.target.value, 'client')}
-      />
       <List className='trainer-list' component='div'>
         {clientExercisesList.map((ex) => {
           const exInfo: ExerciseType = getExerciseInfo(ex.exercise_id);

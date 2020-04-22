@@ -28,7 +28,7 @@ export const TrainerExerciseListComponent: React.FC<Props> = (props) => {
   } = props;
 
   const needsToShow = (id: number): boolean =>
-    clientExercisesList.find((elem) => elem.exercise_id === id)?false:true;
+    clientExercisesList.find((elem) => elem.exercise_id === id) ? false : true;
 
   return (
     <div id='trainer list'>
@@ -37,28 +37,27 @@ export const TrainerExerciseListComponent: React.FC<Props> = (props) => {
         onChange={(e) => handleSearchFilter(e.target.value, 'trainer')}
       />
       <List className='trainer-list' component='div'>
-        {trainerExercisesList.map((t) => (
-          needsToShow(t.exercise_id)?
-          <ListItem key={t.exercise_id}>
-            <ListItemAvatar>
-              <Avatar variant='square' src={t.images} />
-            </ListItemAvatar>
-            <Typography paragraph gutterBottom>
-              {t.name}
-            </Typography>
-            <ListItemSecondaryAction>
-              <IconButton
-                edge='end'
-                aria-label='add'
-                onClick={(e) => handleAddExerciseSettings(t.exercise_id)}
-              >
-                <ArrowForwardIosIcon />
-              </IconButton>
-            </ListItemSecondaryAction>
+        {trainerExercisesList.map((t) =>
+          needsToShow(t.exercise_id) ? (
+            <ListItem key={t.exercise_id}>
+              <ListItemAvatar>
+                <Avatar variant='square' src={t.images} />
+              </ListItemAvatar>
+              <Typography paragraph gutterBottom>
+                {t.name}
+              </Typography>
+              <ListItemSecondaryAction>
+                <IconButton
+                  edge='end'
+                  aria-label='add'
+                  onClick={(e) => handleAddExerciseSettings(t.exercise_id)}
+                >
+                  <ArrowForwardIosIcon />
+                </IconButton>
+              </ListItemSecondaryAction>
             </ListItem>
-            :
-            null
-        ))}
+          ) : null
+        )}
       </List>
     </div>
   );
