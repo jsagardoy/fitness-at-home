@@ -5,7 +5,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { TrainerType, ClientType } from 'commonApp/interfaces';
 import { trainerAPI, clientAPI } from 'api';
 import { AccessDeniedComponent, hasPermision } from 'commonApp/components';
-import { RoutineComposerComponent } from './exerciseList';
+import { RoutineComposerComponent } from './routine-composer';
 
 interface Props { }
 

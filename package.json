@@ -48,6 +48,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.9",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.50",
     "core-js": "^3.3.2",
     "dtslint": "^3.4.1",
     "final-form": "^4.19.1",

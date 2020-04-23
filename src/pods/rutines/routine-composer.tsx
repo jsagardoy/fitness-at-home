@@ -10,7 +10,8 @@ import { TrainerExerciseListComponent } from './trainer-exercise-list';
 import { ClientExerciseListComponent } from './client-exercise-list';
 import { ExerciseModalComponent } from './exercise-modal';
 import Divider from '@material-ui/core/Divider';
-import { Button } from '@material-ui/core';
+import { Button, Snackbar } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 
 interface Props {
   client: ClientType;
@@ -37,6 +38,7 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
     trainer.clientList.includes(client.client_id) &&
     client.trainer_id === trainer.trainer_id;
 
+  const [open, setOpen] = React.useState(false);
   const [openModal, setOpenModal] = React.useState(false);
   const [selectedTrainerExercise, setSelectedTrainerExercise] = React.useState<
     number
@@ -83,15 +85,26 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
     setSelectedTrainerExercise(exerciseId);
   };
 
+  const handleClick = () => {
+    setOpen(true);
+  };
+  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
   const saveRoutine = () => {
     client.exercisesList = clientExerciseList;
-    // TBD changed witih the DB changing
+    // TBD changed witih the DB changing and message called
     const newClient = clientAPI.find((c) => c.client_id === client.client_id);
     clientAPI.splice(
       clientAPI.findIndex((c) => c.client_id === client.client_id),
       1,
       newClient
     );
+    setOpen(true);
   };
   return (
     <>
@@ -117,6 +130,11 @@ export const RoutineComposerComponent: React.FC<Props> = (props) => {
       >
         Generar rutina
       </Button>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert variant='filled' onClose={handleClose} severity='success'>
+          Se ha generado la rutina!
+        </Alert>
+      </Snackbar>
     </>
   );
 };

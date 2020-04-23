@@ -69,7 +69,7 @@ export const ExerciseListComponent: React.FC<Props> = (props) => {
                 </ListItemAvatar>
                 <ListItemText primary={ex.name} secondary={ex.description} />
                 <ListItemSecondaryAction>
-                  {/* TBD onClick */}
+                  {/* TBD onClick for editting*/}
                   <IconButton edge='end' aria-label='edit' onClick={(e) => {}}>
                     <EditIcon />
                   </IconButton>
