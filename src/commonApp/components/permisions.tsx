@@ -12,6 +12,8 @@ const trainerComponents = [
   'ClientsContainerComponent',
   'ClientsListContainerComponent',
   'ExerciseListComponent',
+  'ExerciseFormComponent',
+  'ExerciseCardComponent',
 ];
 const clientComponents = ['displayClientInfoComponent'];
 

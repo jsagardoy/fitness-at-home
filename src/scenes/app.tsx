@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 export const App: React.FC<{}> = () => {
   const clientId: number = 1;
   const trainerId: number = 1;
+  const exerciseId: number = 1;
   return (
     <>
       <h1>Home APP</h1>
@@ -17,10 +18,19 @@ export const App: React.FC<{}> = () => {
               <Link to={`/trainer/${trainerId}/clients`}>Clients</Link>
             </li>
             <li>
-              <Link to={`/trainer/${trainerId}/client/${clientId}`}>Agente Wigum</Link>
+              <Link to={`/trainer/${trainerId}/client/${clientId}`}>
+                Agente Wigum
+              </Link>
             </li>
             <li>
-              <Link to={`/trainer/${trainerId}/exercise-list`}>Lista de ejercicios de entrenador</Link>
+              <Link to={`/trainer/${trainerId}/exercise-list`}>
+                Lista de ejercicios de entrenador
+              </Link>
+            </li>
+            <li>
+              <Link to={`/trainer/${trainerId}/exercise-info/${exerciseId}`}>
+                Ejercicio {exerciseId} del entrenador {trainerId}
+              </Link>
             </li>
             <li>
               <Link to={`/login`}>Login</Link>
