@@ -13,6 +13,7 @@ import {
   Typography,
   Divider,
   ListItemText,
+  TextField,
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { hasPermision, AccessDeniedComponent } from 'commonApp/components';
@@ -39,10 +40,20 @@ export const ExerciseListComponent: React.FC<Props> = (props) => {
   const trainerExerciselist: ExerciseType[] = exerciseAPI.filter((ex) =>
     ex.trainer_id.includes(+trainerId)
   );
+  const [list, setList] = React.useState<ExerciseType[]>(trainerExerciselist);
+
+  const handleFindTrainerExerciseList = (value: string) =>
+    setList(trainerExerciselist.filter((ex) => ex.name.includes(value)));
 
   return hasPermision('ExerciseListComponent') ? (
     <>
-      {trainerExerciselist.map((ex) => {
+      <TextField
+        name='find'
+        onChange={(e) => handleFindTrainerExerciseList(e.target.value)}
+        label='Buscar'
+        placeholder='Filtrar...'
+      />
+      {list.map((ex) => {
         return (
           <>
             <List className={classes.root}>
