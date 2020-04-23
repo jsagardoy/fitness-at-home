@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import {
   makeStyles,
   Theme,
@@ -15,6 +15,7 @@ import {
   ListItemText,
   TextField,
 } from '@material-ui/core';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import EditIcon from '@material-ui/icons/Edit';
 import { hasPermision, AccessDeniedComponent } from 'commonApp/components';
 import { ExerciseType } from 'commonApp/interfaces';
@@ -36,6 +37,7 @@ interface Props {}
 
 export const ExerciseListComponent: React.FC<Props> = (props) => {
   const { trainerId } = useParams();
+  const history = useHistory();
   const classes = useStyles();
   const trainerExerciselist: ExerciseType[] = exerciseAPI.filter((ex) =>
     ex.trainer_id.includes(+trainerId)
@@ -44,6 +46,10 @@ export const ExerciseListComponent: React.FC<Props> = (props) => {
 
   const handleFindTrainerExerciseList = (value: string) =>
     setList(trainerExerciselist.filter((ex) => ex.name.includes(value)));
+
+  const handleExerciseDetails = (id: number) => {
+    history.push(`/trainer/${trainerId}/exercise-info/${id}`);
+  };
 
   return hasPermision('ExerciseListComponent') ? (
     <>
@@ -64,8 +70,15 @@ export const ExerciseListComponent: React.FC<Props> = (props) => {
                 <ListItemText primary={ex.name} secondary={ex.description} />
                 <ListItemSecondaryAction>
                   {/* TBD onClick */}
-                  <IconButton edge='end' aria-label='add' onClick={(e) => {}}>
+                  <IconButton edge='end' aria-label='edit' onClick={(e) => {}}>
                     <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    edge='end'
+                    aria-label='details'
+                    onClick={(e) => handleExerciseDetails(ex.exercise_id)}
+                  >
+                    <ArrowForwardIosIcon />
                   </IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
