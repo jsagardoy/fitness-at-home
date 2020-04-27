@@ -54,7 +54,7 @@ export const LoginComponent: React.FC<Props> = (props) => {
             )}
           </Field>
           {submitError && <div className='error'>{submitError}</div>}
-          <Button type='submit'>Submit</Button>
+          <Button type='submit'>Login</Button>
         </form>
       )}
     />

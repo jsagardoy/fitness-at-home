@@ -12,7 +12,7 @@ import { ClientDetailComponent } from 'pods/clients';
 import { LoginComponent, logoutHandlerComponent } from 'common/login';
 import { getSessionCookie } from 'common/cookies';
 import { ManageRoutinesComponent } from 'pods/rutines';
-import { ExerciseListComponent, ExerciseCardComponent } from './pods/exercises';
+import { ExerciseListComponent, ExerciseCardComponent, ExerciseFormComponent } from './pods/exercises';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
@@ -61,6 +61,11 @@ const routing = (
         exact
         path='/trainer/:trainerId/exercise-info/:exerciseId'
         component={ExerciseCardComponent}
+      />
+      <PrivateRoute
+        exact
+        path='/trainer/:trainerId/create-exercise'
+        component={ExerciseFormComponent}
       />
     </Switch>
   </Router>

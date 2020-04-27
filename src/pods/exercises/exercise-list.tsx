@@ -61,8 +61,8 @@ export const ExerciseListComponent: React.FC<Props> = (props) => {
       />
       {list.map((ex) => {
         return (
-          <>
-            <List className={classes.root}>
+          <div key={ex.exercise_id}>
+            <List  className={classes.root}>
               <ListItem>
                 <ListItemAvatar>
                   <Avatar variant='square' src={ex.images} />
@@ -84,7 +84,7 @@ export const ExerciseListComponent: React.FC<Props> = (props) => {
               </ListItem>
             </List>
             <Divider />
-          </>
+          </div>
         );
       })}
     </>

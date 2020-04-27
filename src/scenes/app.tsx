@@ -33,6 +33,11 @@ export const App: React.FC<{}> = () => {
               </Link>
             </li>
             <li>
+              <Link to={`/trainer/${trainerId}/create-exercise`}>
+                El entrenador {trainerId} crear un ejercicio nuevo 
+              </Link>
+            </li>
+            <li>
               <Link to={`/login`}>Login</Link>
             </li>
             <li>
