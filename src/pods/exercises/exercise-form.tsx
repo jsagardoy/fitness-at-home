@@ -11,12 +11,17 @@ import { TrainerType } from 'commonApp/interfaces';
 import Paper from '@material-ui/core/Paper';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
+import { readFileSync } from 'fs';
 // TBD
 interface Props {}
 
 export const ExerciseFormComponent: React.FC<Props> = (props) => {
   const { trainerId } = useParams();
   const [open, setOpen] = React.useState(false);
+  const fileReader = new FileReader();
+
+  const [image, setImage] = React.useState(null);
+
   const getLastExerciseId = (): number =>
     exerciseAPI.reduce((p, c) => {
       if (c.exercise_id > p) {
@@ -38,20 +43,34 @@ export const ExerciseFormComponent: React.FC<Props> = (props) => {
   const getTrainer = (id: number): TrainerType =>
     trainerAPI.find((t) => t.trainer_id === id);
 
+  const readFile = (file: any) => {
+    fileReader.readAsDataURL(file);
+    fileReader.onload = (e) => {
+      setImage(fileReader.result);
+    };
+  };
+
+  const onChange = (e) => {
+    const files: string[] = event.target['files'];
+    if (files.length > 0) {
+      readFile(files[0]);
+    }
+  };
+
   const onSubmit = (exerciseInfo: ExerciseType) => {
     const newExercise: ExerciseType = {
       exercise_id: getNewExerciseId(),
       name: exerciseInfo.name,
       description: exerciseInfo.description,
       trainer_id: [getTrainerId()],
-      images: exerciseInfo.images,
+      images: image,
     };
     const trainer = getTrainer(getTrainerId());
     trainer.exerciseList.push(newExercise.exercise_id);
     exerciseAPI.push(newExercise);
     // TBD set ofpen in according to BBDD promise
     setOpen(true);
-    };
+  };
   return hasPermision('ExerciseFormComponent') ? (
     <Paper>
       <Form
@@ -75,7 +94,9 @@ export const ExerciseFormComponent: React.FC<Props> = (props) => {
               )}
             </Field>
             <Field name='image'>
-              {({ input }) => <Input type='file' {...input} />}
+              {({ input }) => (
+                <Input type='file' id='image' onChange={(e) => onChange(e)} />
+              )}
             </Field>
             {submitError && <div className='error'>{submitError}</div>}
             <Button type='submit'>Submit</Button>
@@ -87,6 +108,7 @@ export const ExerciseFormComponent: React.FC<Props> = (props) => {
           Se ha creado un ejercicio!
         </Alert>
       </Snackbar>
+      <img src={image} />
     </Paper>
   ) : (
     <AccessDeniedComponent />
