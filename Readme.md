@@ -1,4 +1,4 @@
-# Boiter-Plate-React-Ts
+# Fitness-At-Home-Ts
 ## Description
 This is a boiler plate project ready to be used that includes react, typescript, webpack, defined and ready to go.
 ## Project structure
